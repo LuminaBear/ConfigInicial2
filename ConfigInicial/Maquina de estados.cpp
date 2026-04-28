@@ -585,7 +585,7 @@ void Animation() {
 		}
 	}
 	else {
-		// Reset de pose cuando se detiene
+		// Reset de pose cuando
 		RLegs = FLegs = head = tail = 0.0f;
 	}
 }
