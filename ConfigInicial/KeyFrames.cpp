@@ -131,6 +131,8 @@ typedef struct _frame {
 	float incX;
 	float incY;
 	float incZ;
+	float head;
+	float headInc;
 
 
 }FRAME;
@@ -150,7 +152,7 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].dogPosZ = dogPosZ;
 
 	KeyFrame[FrameIndex].rotDog = rotDog;
-
+	KeyFrame[FrameIndex].head = head;
 
 	FrameIndex++;
 }
@@ -160,6 +162,7 @@ void resetElements(void)
 	dogPosX = KeyFrame[0].dogPosX;
 	dogPosY = KeyFrame[0].dogPosY;
 	dogPosZ = KeyFrame[0].dogPosZ;
+	head = KeyFrame[FrameIndex].head;
 
 	rotDog = KeyFrame[0].rotDog;
 
@@ -170,6 +173,7 @@ void interpolation(void)
 	KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].dogPosX - KeyFrame[playIndex].dogPosX) / i_max_steps;
 	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].dogPosY - KeyFrame[playIndex].dogPosY) / i_max_steps;
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].dogPosZ - KeyFrame[playIndex].dogPosZ) / i_max_steps;
+	KeyFrame[playIndex].headInc = (KeyFrame[playIndex + 1].head - KeyFrame[playIndex].head) / i_max_steps;
 
 	KeyFrame[playIndex].rotDogInc = (KeyFrame[playIndex + 1].rotDog - KeyFrame[playIndex].rotDog) / i_max_steps;
 
@@ -193,7 +197,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion maquina de estados", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion maquina de estados - Martinez Perez Isaac Tadeo", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -255,6 +259,8 @@ int main()
 		KeyFrame[i].incZ = 0;
 		KeyFrame[i].rotDog = 0;
 		KeyFrame[i].rotDogInc = 0;
+		KeyFrame[i].head = 0;
+		KeyFrame[i].headInc = 0;
 	}
 
 
@@ -487,6 +493,20 @@ void DoMovement()
 {
 	//Dog Controls
 	
+	if (keys[GLFW_KEY_4])
+	{
+
+		head += 1.0f;
+
+	}
+
+	if (keys[GLFW_KEY_5])
+	{
+
+		head -= 1.0f;
+
+	}
+
 	if (keys[GLFW_KEY_2])
 	{
 		
@@ -672,6 +692,7 @@ void Animation() {
 			dogPosX += KeyFrame[playIndex].incX;
 			dogPosY += KeyFrame[playIndex].incY;
 			dogPosZ += KeyFrame[playIndex].incZ;
+			head += KeyFrame[playIndex].headInc;
 
 			rotDog += KeyFrame[playIndex].rotDogInc;
 
