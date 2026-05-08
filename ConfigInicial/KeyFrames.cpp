@@ -28,6 +28,7 @@
 #include "Camera.h"
 #include "Model.h"
 
+
 // Function prototypes
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
